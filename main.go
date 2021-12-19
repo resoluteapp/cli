@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	"github.com/resoluteapp/cli/pkg/cmds"
+)
 
 func main() {
-	fmt.Println("foo bar")
+	err := cmds.RootCMD.Execute()
+	if err != nil {
+		log.Panicln(err)
+	}
 }
