@@ -1,0 +1,13 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "resolute"
+path = "src/main.rs"
+
+[dependencies]
+clap = "3.0.10"
+rocket = "0.4.10"
+webbrowser = "0.5.5"
