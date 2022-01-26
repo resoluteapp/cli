@@ -1,3 +1,11 @@
+mod cli;
+
 fn main() {
-    println!("Hello, world!");
+    let matches = cli::setup();
+    match matches.subcommand() {
+        Some(("login", login_matches)) => {
+            println!("Login command executed");
+        }
+        _ => unreachable!(),
+    }
 }

@@ -3,4 +3,9 @@ name = "cli"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "resolute"
+path = "src/main.rs"
+
 [dependencies]
+clap = "3.0.10"
