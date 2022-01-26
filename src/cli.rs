@@ -6,5 +6,6 @@ pub fn setup() -> ArgMatches {
         .version("0.1.0")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .author("Resolute Team")
+        .subcommand(App::new("login").about("Login to resolute using oauth"))
         .get_matches()
 }

@@ -9,3 +9,5 @@ path = "src/main.rs"
 
 [dependencies]
 clap = "3.0.10"
+rocket = "0.4.10"
+webbrowser = "0.5.5"
