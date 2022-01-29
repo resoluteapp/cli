@@ -2,15 +2,16 @@ use anyhow::{Context, Result};
 use chrono::{DateTime, Duration, Local, Utc};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 const API_URL: &str = "https://useresolute.com/api";
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Reminder {
     pub id: u32,
     pub text: String,
     pub created_at: DateTime<Utc>,
+    pub url: Option<String>,
     #[serde(skip)]
     pub age: Option<Duration>,
 }

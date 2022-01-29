@@ -12,9 +12,14 @@ pub fn run(client: Client) {
 fn output(reminders: Vec<Reminder>) {
     for reminder in reminders {
         println!(
-            "- {} ({})",
+            "- {} ({}){}",
             reminder.text,
-            HumanTime::from(reminder.age.unwrap())
+            HumanTime::from(reminder.age.unwrap()),
+            if reminder.url.is_some() {
+                format!(" -> {}", reminder.url.unwrap())
+            } else {
+                String::new()
+            }
         )
     }
 }
