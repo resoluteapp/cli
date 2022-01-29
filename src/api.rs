@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Duration, Local, Utc};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde::Deserialize;
@@ -11,6 +11,8 @@ pub struct Reminder {
     pub id: u32,
     pub text: String,
     pub created_at: DateTime<Utc>,
+    #[serde(skip)]
+    pub age: Option<Duration>,
 }
 
 impl Reminder {
@@ -25,8 +27,14 @@ impl Reminder {
             "Response didn't have status code of 200"
         );
 
-        let reminders: Vec<Reminder> =
+        let mut reminders: Vec<Reminder> =
             serde_json::from_str(&response.text()?).context("Failed to parse request")?;
+
+        let now = Local::now();
+        for reminder in &mut reminders {
+            reminder.age = Some(reminder.created_at.signed_duration_since(now));
+        }
+
         Ok(reminders)
     }
 }
