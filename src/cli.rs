@@ -6,7 +6,6 @@ pub fn setup() -> ArgMatches {
         .version("0.1.0")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .author("Resolute Team")
-        .subcommand(App::new("login").about("Login to resolute using oauth"))
         .subcommand(App::new("list").about("List reminders"))
         .subcommand(App::new("create").about("Create a reminder"))
         .get_matches()
