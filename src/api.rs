@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 const API_URL: &str = "https://useresolute.com/api";
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Reminder {
     #[serde(skip_serializing)]
     pub id: Option<u32>,

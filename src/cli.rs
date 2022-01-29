@@ -1,4 +1,4 @@
-use clap::{App, AppSettings, ArgMatches};
+use clap::{App, AppSettings, Arg, ArgMatches};
 
 pub fn setup() -> ArgMatches {
     App::new("resolute")
@@ -7,6 +7,10 @@ pub fn setup() -> ArgMatches {
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .author("Resolute Team")
         .subcommand(App::new("list").about("List reminders"))
-        .subcommand(App::new("create").about("Create a reminder"))
+        .subcommand(
+            App::new("create")
+                .about("Create a reminder")
+                .arg(Arg::new("reminder").index(1).required(true)),
+        )
         .get_matches()
 }
