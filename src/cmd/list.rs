@@ -10,6 +10,10 @@ pub fn run(client: Client) {
 }
 
 fn output(reminders: Vec<Reminder>) {
+    if reminders.is_empty() {
+        println!("No reminders created");
+        return;
+    }
     for reminder in reminders {
         println!(
             "- {} ({}){}",
