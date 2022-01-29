@@ -1,13 +1,16 @@
 use anyhow::Result;
-use chrono::Utc;
 use dialoguer::{theme::ColorfulTheme, Input};
 use reqwest::blocking::Client;
 
-use crate::api::Reminder;
+use crate::{api::Reminder, conf};
 
 pub fn run(client: Client) {
+    let token = conf::read_token().expect("Failed to read token");
     let reminder = ask().expect("Failed to ask user information about new reminder");
-    println!("{:?}", reminder);
+    reminder
+        .create(&client, &token)
+        .expect("Failed to create reminder");
+    println!("\nCreated reminder");
 }
 
 fn ask() -> Result<Reminder> {
@@ -20,10 +23,10 @@ fn ask() -> Result<Reminder> {
         .allow_empty(true)
         .interact()?;
     Ok(Reminder {
-        id: None,
         text,
-        created_at: Utc::now(),
-        url: if "" == &url { None } else { Some(url) },
+        url: if url.is_empty() { None } else { Some(url) },
+        id: None,
+        created_at: None,
         age: None,
     })
 }
