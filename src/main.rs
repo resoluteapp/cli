@@ -1,7 +1,4 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
-use cmd::{create, list};
-use reqwest::blocking::Client;
+use cmd::{create, delete, list};
 
 mod api;
 mod cli;
@@ -11,14 +8,9 @@ mod conf;
 fn main() {
     let matches = cli::setup();
     match matches.subcommand() {
-        Some(("list", _)) => {
-            let client = Client::new();
-            list::run(client);
-        }
-        Some(("create", matches)) => {
-            let client = Client::new();
-            create::run(matches, client);
-        }
+        Some(("list", _)) => list::run(),
+        Some(("create", matches)) => create::run(matches),
+        Some(("delete", _)) => delete::run(),
         _ => unreachable!(),
     }
 }

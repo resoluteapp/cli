@@ -1,9 +1,9 @@
-use chrono_humanize::HumanTime;
 use reqwest::blocking::Client;
 
 use crate::{api::Reminder, conf};
 
-pub fn run(client: Client) {
+pub fn run() {
+    let client = Client::new();
     let token = conf::read_token().expect("Failed to read token");
     let reminders = Reminder::fetch_all(&client, &token).expect("Failed to fetch reminders");
     output(reminders);
@@ -11,19 +11,10 @@ pub fn run(client: Client) {
 
 fn output(reminders: Vec<Reminder>) {
     if reminders.is_empty() {
-        println!("No reminders created");
+        println!("No reminders found");
         return;
     }
     for reminder in reminders {
-        println!(
-            "- {} ({}){}",
-            reminder.text,
-            HumanTime::from(reminder.age.unwrap()),
-            if reminder.url.is_some() {
-                format!(" -> {}", reminder.url.unwrap())
-            } else {
-                String::new()
-            }
-        )
+        println!("- {}", reminder.format())
     }
 }

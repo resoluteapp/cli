@@ -3,7 +3,8 @@ use reqwest::blocking::Client;
 
 use crate::{api::Reminder, conf};
 
-pub fn run(args: &ArgMatches, client: Client) {
+pub fn run(args: &ArgMatches) {
+    let client = Client::new();
     let token = conf::read_token().expect("Failed to read token");
     let reminder = Reminder {
         text: String::from(args.value_of("reminder").unwrap()),

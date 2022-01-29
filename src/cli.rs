@@ -12,5 +12,10 @@ pub fn setup() -> ArgMatches {
                 .about("Create a reminder")
                 .arg(Arg::new("reminder").index(1).required(true)),
         )
+        .subcommand(
+            App::new("delete")
+                .about("Delete a reminder")
+                .arg(Arg::new("id").index(1)),
+        )
         .get_matches()
 }

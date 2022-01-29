@@ -1,5 +1,6 @@
 use anyhow::{Context, Result};
 use chrono::{DateTime, Duration, Local, Utc};
+use chrono_humanize::HumanTime;
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
@@ -49,9 +50,35 @@ impl Reminder {
             .send()
             .context("Failed to send request")?;
         anyhow::ensure!(
-            response.status() == StatusCode::OK,
-            "Response didn't have status code of 200"
+            response.status() == StatusCode::CREATED,
+            "Response didn't have status code of 201"
         );
         Ok(())
+    }
+
+    pub fn delete(&self, client: &Client, token: &str) -> Result<()> {
+        let response = client
+            .delete(format!("{}/reminders/{}", API_URL, self.id.unwrap()))
+            .bearer_auth(token)
+            .send()
+            .context("Failed to send request")?;
+        anyhow::ensure!(
+            response.status() == StatusCode::NO_CONTENT,
+            "Response didn't have status code of 204"
+        );
+        Ok(())
+    }
+
+    pub fn format(&self) -> String {
+        format!(
+            "{} ({}){}",
+            self.text,
+            HumanTime::from(self.age.unwrap()),
+            if self.url.is_some() {
+                format!(" -> {}", self.url.as_ref().unwrap())
+            } else {
+                String::new()
+            }
+        )
     }
 }
