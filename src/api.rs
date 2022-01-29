@@ -8,7 +8,7 @@ const API_URL: &str = "https://useresolute.com/api";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Reminder {
-    pub id: u32,
+    pub id: Option<u32>,
     pub text: String,
     pub created_at: DateTime<Utc>,
     pub url: Option<String>,

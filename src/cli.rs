@@ -8,5 +8,6 @@ pub fn setup() -> ArgMatches {
         .author("Resolute Team")
         .subcommand(App::new("login").about("Login to resolute using oauth"))
         .subcommand(App::new("list").about("List reminders"))
+        .subcommand(App::new("create").about("Create a reminder"))
         .get_matches()
 }

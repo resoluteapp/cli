@@ -1,6 +1,6 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-use cmd::{list, login};
+use cmd::{create, list, login};
 use reqwest::blocking::Client;
 
 mod api;
@@ -17,6 +17,10 @@ fn main() {
         Some(("list", _)) => {
             let client = Client::new();
             list::run(client);
+        }
+        Some(("create", _)) => {
+            let client = Client::new();
+            create::run(client);
         }
         _ => unreachable!(),
     }
