@@ -1,21 +1,26 @@
-use clap::{App, AppSettings, Arg, ArgMatches};
+use clap::{Arg, Command};
+use clap_complete::Shell;
 
-pub fn setup() -> ArgMatches {
-    App::new("resolute")
+pub fn setup() -> Command<'static> {
+    Command::new("resolute")
         .about("Command line tool for useresolute.com")
         .version("0.1.0")
-        .setting(AppSettings::SubcommandRequiredElseHelp)
+        .subcommand_required(true)
         .author("Resolute Team")
-        .subcommand(App::new("list").about("List reminders"))
+        .subcommand(Command::new("list").about("List reminders"))
         .subcommand(
-            App::new("create")
+            Command::new("create")
                 .about("Create a reminder")
                 .arg(Arg::new("reminder").index(1).required(true)),
         )
         .subcommand(
-            App::new("delete")
+            Command::new("delete")
                 .about("Delete a reminder")
                 .arg(Arg::new("id").index(1)),
         )
-        .get_matches()
+        .subcommand(
+            Command::new("completion")
+                .about("Generate shell completion for resolute")
+                .arg(Arg::new("shell").possible_values(Shell::possible_values())),
+        )
 }
